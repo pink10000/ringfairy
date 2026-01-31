@@ -5,5 +5,12 @@
 		"about": "website about stuff i've done and things i like",
         "url": "https://kytrinh.me",
 		"owner": "pink10000"
+    },
+    {
+        "name": "rootydev",
+        "slug": "rootydev",
+        "about": "My personal site/blog. I'll put more stuff there eventually.",
+        "url": "https://rooty.dev",
+        "owner": "otisdog8"
     }
 ]
