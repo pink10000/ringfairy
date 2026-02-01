@@ -5,5 +5,13 @@
 		"about": "website about stuff i've done and things i like",
         "url": "https://kytrinh.me",
 		"owner": "pink10000"
+    },
+    {
+        "name": "godsped",
+        "slug": "godsped",
+		"about": "the internet garden I tend to",
+		"atom": "https://godsped.com/feed.xml",
+        "url": "https://godsped.com/",
+		"owner": "Samir-Rashid"
     }
 ]
