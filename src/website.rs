@@ -43,6 +43,7 @@ impl std::hash::Hash for Website {
     }
 }
 
+#[allow(dead_code)]
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct WebsitesTomlFormat {
     pub websites: Vec<Website>,
