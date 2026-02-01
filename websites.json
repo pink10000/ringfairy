@@ -20,12 +20,12 @@
 		    "atom": "https://godsped.com/feed.xml",
         "url": "https://godsped.com/",
 		    "owner": "Samir-Rashid"
-    }, { "name": "sean"
+    }, { "name": "SheepTester"
 	   , "slug": "sheeptester"
 	   , "about": "personal website with games and little tools written in the HTML programming language"
 	   , "url": "https://sheeptester.github.io/"
 	   , "atom": "https://sheeptester.github.io/longer-tweets/feed.xml"
-	   , "owner": "SheepTester"
+	   , "owner": "sean"
 	   } ,
     {
         "name": "atarbinian",
