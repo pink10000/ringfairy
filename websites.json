@@ -7,11 +7,18 @@
 		"owner": "pink10000"
     },
     {
+        "name": "rootydev",
+        "slug": "rootydev",
+        "about": "My personal site/blog. I'll put more stuff there eventually.",
+        "url": "https://rooty.dev",
+        "owner": "otisdog8",
+    },
+    {
         "name": "godsped",
         "slug": "godsped",
-		"about": "the internet garden I tend to",
-		"atom": "https://godsped.com/feed.xml",
+		    "about": "the internet garden I tend to",
+		    "atom": "https://godsped.com/feed.xml",
         "url": "https://godsped.com/",
-		"owner": "Samir-Rashid"
+		    "owner": "Samir-Rashid"
     }
 ]
