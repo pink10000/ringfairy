@@ -41,5 +41,12 @@
         "about": "personal site",
         "url": "https://jerukan.github.io/",
         "owner": "jerukan"
+    },
+    {
+        "name": "clee",
+        "slug": "clee",
+        "about": "personal site",
+        "url": "https://clee.cloud",
+        "owner": "askewparity"
     }
 ]
