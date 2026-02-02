@@ -1,7 +1,7 @@
 [
     {
         "name": "kytrinh siteweb",
-        "slug": "website @ ky",
+        "slug": "kytrinh-siteweb",
 		"about": "website about stuff i've done and things i like",
         "url": "https://kytrinh.me",
 		"owner": "pink10000"
@@ -20,7 +20,13 @@
 		    "atom": "https://godsped.com/feed.xml",
         "url": "https://godsped.com/",
 		    "owner": "Samir-Rashid"
-    },
+    }, { "name": "SheepTester"
+	   , "slug": "sheeptester"
+	   , "about": "personal website with games and little tools written in the HTML programming language"
+	   , "url": "https://sheeptester.github.io/"
+	   , "atom": "https://sheeptester.github.io/longer-tweets/feed.xml"
+	   , "owner": "sean"
+	   } ,
     {
         "name": "atarbinian",
         "slug": "atarbinian",
@@ -35,5 +41,12 @@
         "about": "to be dun",
         "url": "https://bschan9228.github.io",
         "owner": "bschan9228"
+    },
+    {
+        "name": "jerukan",
+        "slug": "jerukan",
+        "about": "personal site",
+        "url": "https://jerukan.github.io/",
+        "owner": "jerukan"
     }
 ]
