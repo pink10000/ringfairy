@@ -1,61 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="stylesheet" href="./styles.css">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ ring_name }} List</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ ring_name }}</title>
+    <meta
+      name="description"
+      content="A webring of people on Samir's Discord server. By happenstance, they seem to be UCSD students (current and former)."
+    />
+    <meta name="theme-color" content="#ee5396" />
+
+    <link rel="stylesheet" href="./styles-index.css" />
   </head>
   <body>
-    <h1>{{ ring_name }} List</h1>
-	<p>{{ ring_description }}</p>
-    <p>Add all sites with declared RSS feeds to your feed reader with this <a href ="{{ opml }}">OPML</a> link.</p>
-    
-  {% if sites %}
-  <table>
-    <thead>
-        <tr>
-            <th scope="col">Name</th>
-            <th scope="col">URL</th>
-            <th scope="col">About</th>
-            <th scope="col">Owner</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for site in sites %}
-        <tr>
-            <td>{{ site.website.slug }}</td>
-            <td>
-                <a href="{{ site.website.url }}" target="_blank">{{ site.website.url }}</a>
-                {% if site.website.rss %}
-                  <a href="{{ site.website.rss }}" target="_blank">[rss]</a>
-                {% endif %}
-                {% if site.website.atom %}
-                  <a href="{{ site.website.atom }}" target="_blank">[atom]</a>
-                {% endif %}
-            </td>
-            <td>{{ site.website.about | default(value="") }}</td>
-            <td>{{ site.website.owner | default(value="") }}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-  {% endif %}
+    <div class="sidebar">
+      <h1>{{ ring_name }}</h1>
+      <p class="desc">
+        A webring of people on
+        <a href="https://github.com/Samir-Rashid.png">Samir</a>'s Discord
+        server. By happenstance, they seem to be UCSD students (current and
+        former).
+      </p>
+      <p>
+        github:
+        <a
+          style="color: var(--base11)"
+          href="https://github.com/pink10000/ringfairy"
+          >pink10000/ringfairy</a
+        >
+      </p>
+      <p>
+        opml:
+        <a style="color: var(--base11)" href="{{ opml }}">upbring.opml</a>
+      </p>
+      <p>
+        last-updated:
+        <span style="color: var(--base11)">{{ current_time }}</span>
+      </p>
+      <p>
+        powered-by:
+        <a
+          href="https://github.com/k3rs3d/ringfairy"
+          style="color: var(--base11)"
+          >ringfairy</a
+        >
+      </p>
+    </div>
 
-  {% if failed_sites %}
-  The following member sites were not included in this iteration of the webring:
-  <ul>
-    {% for site in failed_sites %}
+    <div>
+      {% if sites %} {% for site in sites %}
+      <p class="site">
+        (<span class="keyword">link</span>
+        <a href="{{ site.website.url }}">{{ site.website.name }}</a>
+        {% if site.website.rss %}
+        <br /><a class="symbol" href="{{ site.website.rss }}">'rss</a>
+        {% endif %} {% if site.website.atom %}
+        <br /><a class="symbol" href="{{ site.website.atom }}">'atom</a>
+        {% endif %}
+        <br /><span class="string"
+          >"{{ site.website.about | default(value="") }}"</span
+        >)
+      </p>
+      {% endfor %} {% endif %} {% if failed_sites %} The following member sites
+      were not included in this iteration of the webring:
+      <ul>
+        {% for site in failed_sites %}
         <li>{{ site.website.url }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  
-
-	<br>
-	<footer>
-	  <p>Last updated: {{ current_time }} </p>
-	  <p>Powered by <a href="https://github.com/k3rs3d/ringfairy">ringfairy</a>!</p>
-	</footer>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <p class="faded">
+        ; theme:
+        <a href="https://github.com/nyoom-engineering/oxocarbon.nvim"
+          >oxocarbon</a
+        >
+      </p>
+    </div>
   </body>
 </html>

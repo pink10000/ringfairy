@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* Generated from https://github.com/nyoom-engineering/oxocarbon.nvim */
+  --base00: #161616;
+  --base01: #262626;
+  --base02: #393939;
+  --base03: #525252;
+  --base04: #d0d0d0;
+  --base05: #f2f2f2;
+  --base06: #ffffff;
+  --base07: #08bdba;
+  --base08: #3ddbd9;
+  --base09: #78a9ff;
+  --base10: #ee5396;
+  --base11: #33b1ff;
+  --base12: #ff7eb6;
+  --base13: #42be65;
+  --base14: #be95ff;
+  --base15: #82cfff;
+
+  display: flex;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  /* Tailwind default monospace stack, from Jacob's website */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  line-height: 1.1;
+  background-color: #1c1c1c;
+  color: var(--base05);
+  padding: 40px;
+  display: flex;
+}
+
+.sidebar {
+  flex: none;
+  width: 34ch;
+  border-right: 1px solid var(--base02);
+  padding-right: 0.5ch;
+  margin-right: 1.5ch;
+
+  h1,
+  .desc {
+    margin-bottom: 1lh;
+  }
+}
+
+h1 {
+  font: inherit;
+  color: var(--base08);
+}
+
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, currentColor 50%, transparent);
+  text-decoration-style: dashed;
+
+  &:hover {
+    text-decoration-color: currentColor;
+    text-decoration-style: solid;
+  }
+}
+
+.site {
+  padding-left: 6ch;
+  text-indent: -6ch;
+  margin-bottom: 1lh;
+}
+.keyword {
+  font-weight: bold;
+  color: var(--base10);
+}
+.symbol {
+  color: var(--base14);
+}
+.string {
+  color: var(--base13);
+}
+
+.faded {
+  color: var(--base02);
+}
