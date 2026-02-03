@@ -12,6 +12,6 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node"
   },
-  "include": ["colorutils.ts", "index.ts"],
+  "include": ["colorutils.mts", "index.mts"],
   "exclude": ["node_modules", "*.js"]
 }

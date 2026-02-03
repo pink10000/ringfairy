@@ -1,0 +1,29 @@
+:root {
+  color-scheme: dark;
+
+  /* Generated from https://github.com/nyoom-engineering/oxocarbon.nvim */
+  --base00: #161616;
+  --base01: #262626;
+  --base02: #393939;
+  --base03: #525252;
+  --base04: #d0d0d0;
+  --base05: #f2f2f2;
+  --base06: #ffffff;
+  --base07: #08bdba;
+  --base08: #3ddbd9;
+  --base09: #78a9ff;
+  --base10: #ee5396;
+  --base11: #33b1ff;
+  --base12: #ff7eb6;
+  --base13: #42be65;
+  --base14: #be95ff;
+  --base15: #82cfff;
+}
+
+body {
+  /* Tailwind default monospace stack, from Jacob's website */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  background-color: var(--base00);
+  color: var(--base04);
+}

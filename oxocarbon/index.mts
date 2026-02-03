@@ -2,7 +2,7 @@
 // Converted from Lua to TypeScript
 // Note: This is a simplified version without Neovim-specific API calls
 
-import { blendHex } from './colorutils';
+import { blendHex } from "./colorutils.mts";
 
 export interface OxocarbonPalette {
   base00: string;
@@ -25,9 +25,9 @@ export interface OxocarbonPalette {
   none: string;
 }
 
-const BASE00 = '#161616';
-const BASE06 = '#ffffff';
-const BASE09 = '#78a9ff';
+const BASE00 = "#161616";
+const BASE06 = "#ffffff";
+const BASE09 = "#78a9ff";
 
 export function getOxocarbonDark(): OxocarbonPalette {
   return {
@@ -38,17 +38,17 @@ export function getOxocarbonDark(): OxocarbonPalette {
     base04: blendHex(BASE00, BASE06, 0.82),
     base05: blendHex(BASE00, BASE06, 0.95),
     base06: BASE06,
-    base07: '#08bdba',
-    base08: '#3ddbd9',
+    base07: "#08bdba",
+    base08: "#3ddbd9",
     base09: BASE09,
-    base10: '#ee5396',
-    base11: '#33b1ff',
-    base12: '#ff7eb6',
-    base13: '#42be65',
-    base14: '#be95ff',
-    base15: '#82cfff',
-    blend: '#131313',
-    none: 'NONE',
+    base10: "#ee5396",
+    base11: "#33b1ff",
+    base12: "#ff7eb6",
+    base13: "#42be65",
+    base14: "#be95ff",
+    base15: "#82cfff",
+    blend: "#131313",
+    none: "NONE",
   };
 }
 
@@ -58,20 +58,20 @@ export function getOxocarbonLight(): OxocarbonPalette {
     base01: blendHex(BASE00, BASE06, 0.95),
     base02: blendHex(BASE00, BASE06, 0.82),
     base03: BASE00,
-    base04: '#37474F',
-    base05: '#90A4AE',
-    base06: '#525252',
-    base07: '#08bdba',
-    base08: '#ff7eb6',
-    base09: '#ee5396',
-    base10: '#FF6F00',
-    base11: '#0f62fe',
-    base12: '#673AB7',
-    base13: '#42be65',
-    base14: '#be95ff',
-    base15: '#FFAB91',
-    blend: '#FAFAFA',
-    none: 'NONE',
+    base04: "#37474F",
+    base05: "#90A4AE",
+    base06: "#525252",
+    base07: "#08bdba",
+    base08: "#ff7eb6",
+    base09: "#ee5396",
+    base10: "#FF6F00",
+    base11: "#0f62fe",
+    base12: "#673AB7",
+    base13: "#42be65",
+    base14: "#be95ff",
+    base15: "#FFAB91",
+    blend: "#FAFAFA",
+    none: "NONE",
   };
 }
 
