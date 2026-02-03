@@ -1,0 +1,16 @@
+{
+  "name": "oxocarbon",
+  "version": "1.0.0",
+  "description": "Oxocarbon color utilities converted from Lua to TypeScript",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node test.js"
+  },
+  "keywords": ["color", "hsluv", "oxocarbon"],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
