@@ -1,4 +1,5 @@
 base_url = "https://kytrinh.me/ringfairy/"
+base_url_aliases = ["https://pink10000.github.io/ringfairy/"]
 ring_name = "upbring"
 ring_description = "friends"
 ring_owner = "pink10000"
