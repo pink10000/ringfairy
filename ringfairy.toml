@@ -1,8 +1,8 @@
-base_url = "https://pink10000.github.io/ringfairy"
+base_url = "https://kytrinh.me/ringfairy/"
 ring_name = "upbring"
 ring_description = "friends"
 ring_owner = "pink10000"
-ring_owner_site = "https://pink10000.github.io"
+ring_owner_site = "https://kytrinh.me/"
 
 filepath_list = ["./websites.json"]   # Website list; should be a JSON file with 'name', 'url', etc 
 path_output = "./webring"           # Generated files will be saved in this folder.
@@ -17,8 +17,8 @@ audit_retries_delay = 100
 audit_retries_max = 2
 
 audit = true
-shuffle = true         # Randomizes website sequence when generating
-verbose = true         # Enables verbose logging
+shuffle = true          # Randomizes website sequence when generating
+verbose = true          # Enables verbose logging
 skip_minify = false     # If your generated HTML have issues, or you want hand-editable output, try skip minification
 skip_verify = false     # Skips verification of the URLs in the list. Might be unwise!
 dry_run = false         # Perform a dry run without writing any files. Can be used to check the site audit for example. 
