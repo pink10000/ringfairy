@@ -63,5 +63,12 @@
 		"url": "https://macla.ren/",
 		"rss": "https://macla.ren/blog/index.xml",
 		"owner": "molly"
-	}
+	},
+	{
+        "name": "broadwell.me",
+        "slug": "broadwell.me",
+        "about": "Michael's site",
+        "url": "https://broadwell.me",
+        "owner": "broad-well"
+	},
 ]
