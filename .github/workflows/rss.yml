@@ -1,0 +1,48 @@
+name: Check RSS & Atom feeds
+
+on:
+  schedule:
+    # every day at 04:17 PT
+    - cron: 17 4 * * *
+      timezone: America/Los_Angeles
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-rss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build ringfairy
+        run: cargo build --release
+
+      - name: Check RSS feeds
+        id: rss
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          URLS_OLD=$(cat urls.txt || echo)
+          if ./target/release/rss "$URLS_OLD" >> urls.txt
+          then
+            echo "new-posts=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "new-posts=no" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Save URLs
+        if: ${{ steps.rss.outputs.new-posts == 'yes' }}
+        run: |
+          git config user.name joe
+          git add urls.txt
+          git commit -m "new blog posts"
+          git push
