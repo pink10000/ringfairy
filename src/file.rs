@@ -17,9 +17,17 @@ fn parse_csv_websites(csv_data: &str) -> Result<Vec<Website>, Error> {
     Ok(websites)
 }
 
-fn parse_toml_websites(toml_data: &str) -> Result<Vec<Website>, toml::de::Error> {
-    toml::from_str::<Vec<Website>>(toml_data)
-        .or_else(|_| toml::from_str::<WebsitesTomlFormat>(toml_data).map(|list| list.websites))
+fn parse_toml_websites(toml_data: &str) -> Result<Vec<Website>, Error> {
+    match toml::from_str::<Vec<Website>>(toml_data) {
+        Ok(websites) => Ok(websites),
+        Err(vec_err) => toml::from_str::<WebsitesTomlFormat>(toml_data)
+            .map(|list| list.websites)
+            .map_err(|table_err| {
+                Error::StringError(format!(
+                    "Failed to parse TOML as a direct website array ({vec_err}) or as a [[websites]] table array under a 'websites' key ({table_err})"
+                ))
+            }),
+    }
 }
 
 /// Loads the given file(s) with acquire_file_data(), returns a vec of Websites for each site in the file
