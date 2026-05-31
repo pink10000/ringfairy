@@ -20,6 +20,7 @@ pub struct AppSettings {
     pub path_assets: String,
     pub path_templates: String,
     pub base_url: String,
+    pub base_url_aliases: Vec<String>,
     pub next_url_text: String,
     pub prev_url_text: String,
     pub client_user_agent: String,
@@ -52,6 +53,7 @@ impl Default for AppSettings {
             path_assets: "./data/assets".into(),
             path_templates: "./data/templates".into(),
             base_url: " ".to_string(),
+            base_url_aliases: Vec::new(),
             next_url_text: "next".to_string(),
             prev_url_text: "previous".to_string(),
             client_user_agent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36".into(),
@@ -84,6 +86,7 @@ pub struct ConfigSettings {
     pub path_assets: Option<String>,
     pub path_templates: Option<String>,
     pub base_url: Option<String>,
+    pub base_url_aliases: Option<Vec<String>>,
     pub next_url_text: Option<String>,
     pub prev_url_text: Option<String>,
     pub client_user_agent: Option<String>,
@@ -190,6 +193,13 @@ pub struct ClapSettings {
         help = "The base URL for the webring. Something like 'https://example.com'"
     )]
     pub base_url: Option<String>,
+
+    #[clap(
+        long = "url-alias",
+        ignore_case = false,
+        help = "Additional base URLs for the webring, used during site audits."
+    )]
+    pub base_url_aliases: Vec<String>,
 
     #[clap(
         long = "next-text",
@@ -404,6 +414,15 @@ async fn merge_configs(cli_args: ClapSettings, config: self::ConfigSettings) -> 
         .base_url
         .or(config.base_url)
         .unwrap_or(final_settings.base_url);
+
+    final_settings.base_url_aliases = {
+        let mut v = Vec::new();
+        v.extend(cli_args.base_url_aliases);
+        if let Some(c) = config.base_url_aliases {
+            v.extend(c);
+        }
+        v
+    };
 
     final_settings.next_url_text = cli_args
         .next_url_text

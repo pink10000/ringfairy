@@ -264,3 +264,35 @@ async fn test_audit_websites() {
     // TODO call audit function website::audit_links
     //        -> verify function returns correctly audited sites
 }
+
+#[tokio::test]
+async fn test_audit_websites_multiple_base_urls() {
+    let mut settings = mock_app_settings();
+    settings.base_url = "https://example.com".to_string();
+    settings.base_url_aliases = vec![
+        "https://other.com".to_string(),
+    ];
+    let mut mock_site = create_sample_website("test", "");
+
+    let mut mock_server = mockito::Server::new_async().await;
+    mock_site.url = mock_server.url();
+    
+    // Test with the second base URL
+    let mock = mock_server
+        .mock("GET", "/")
+        .with_status(200)
+        .with_header("content-type", "text/html")
+        .with_body(
+            r#"<a href="https://other.com/test/prev">←</a>
+    <a href="https://other.com/test/next">→</a>"#,
+        )
+        .create();
+    
+    let audit_client = http::setup_client(&settings).await.unwrap();
+    let audit_result = website::does_html_contain_links(&audit_client, &mock_site, &settings).await;
+
+    mock.assert_async().await;
+    assert!(audit_result.is_ok());
+    let (_, success, reason) = audit_result.unwrap();
+    assert!(success, "Audit should have succeeded with the second base URL. Reason: {:?}", reason);
+}
