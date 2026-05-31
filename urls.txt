@@ -27,3 +27,4 @@ https://sheeptester.github.io/longer-tweets/google-anal/
 https://pink10000.github.io/blog/first-post/
 https://pink10000.github.io/blog/graduated/
 https://sheeptester.github.io/longer-tweets/jekyll/
+https://pink10000.github.io/blog/class-rating/
