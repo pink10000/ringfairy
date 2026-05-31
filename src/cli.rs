@@ -47,7 +47,7 @@ impl Default for AppSettings {
             _filepath_config: "./ringfairy.toml".into(),
             json_lists: Vec::new(),
             toml_lists: Vec::new(),
-            filepath_list: vec!["./websites.json".to_string()],
+            filepath_list: vec!["./websites.toml".to_string()],
             filename_template_redirect: "redirect.html".into(),
             path_output: "./webring".into(),
             path_assets: "./data/assets".into(),
