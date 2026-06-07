@@ -29,3 +29,4 @@ https://pink10000.github.io/blog/graduated/
 https://sheeptester.github.io/longer-tweets/jekyll/
 https://pink10000.github.io/blog/class-rating/
 https://sheeptester.github.io/longer-tweets/recruiters/
+https://sheeptester.github.io/longer-tweets/json-bigint/
