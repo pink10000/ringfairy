@@ -128,7 +128,12 @@ fn main() -> Result<ExitCode, Box<dyn Error>> {
         .into_iter()
         .map(|post| Embed {
             title: Some(post.title),
-            description: post.description,
+            description: format!(
+                "{}\n\n{}",
+                post.description.unwrap_or_default(),
+                post.tags.iter().map(|tag| format!("#{tag}")).join(" ")
+            )
+            .into(),
             url: Some(post.url),
             timestamp: Some(post.timestamp.to_rfc3339()),
             color: Some(0xee5396),
@@ -138,7 +143,7 @@ fn main() -> Result<ExitCode, Box<dyn Error>> {
                 url: post.blog_url,
             }),
         })
-        .chunks(10)
+        .chunks(1)
     {
         let embeds = embed_group.collect_vec();
         eprintln!("Sending {} post(s) to Discord webhook", embeds.len());
