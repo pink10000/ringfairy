@@ -35,3 +35,4 @@ https://atarbinian.com/blog/post-1/
 https://atarbinian.com/blog/shared-libraries-for-embedded-operating-systems/
 https://sheeptester.github.io/longer-tweets/ucsd-schedule-of-classes/
 https://sheeptester.github.io/longer-tweets/mit-license/
+https://sheeptester.github.io/longer-tweets/personal-projects/
