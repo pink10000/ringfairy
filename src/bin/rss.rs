@@ -2,14 +2,13 @@ use std::{
     collections::HashSet,
     env::{self, args},
     error::Error,
-    fs::File,
     process::ExitCode,
 };
 
 use chrono::{DateTime, Utc};
 use feed_rs::{model::Link, parser};
 use itertools::Itertools;
-use ringfairy::website::Website;
+use ringfairy::website::{Website, WebsitesTomlFormat};
 use serde::Serialize;
 
 use crate::discord::{Author, Embed, Image, Message};
@@ -53,7 +52,8 @@ fn main() -> Result<ExitCode, Box<dyn Error>> {
 
     let client = reqwest::blocking::Client::new();
 
-    let websites: Vec<Website> = serde_json::from_reader(File::open("websites.json")?)?;
+    let websites_file = std::fs::read_to_string("websites.toml")?;
+    let websites: Vec<Website> = toml::from_str::<WebsitesTomlFormat>(&websites_file)?.websites;
     let feeds = websites
         .iter()
         .filter_map(|website| {

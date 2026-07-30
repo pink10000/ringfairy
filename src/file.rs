@@ -1,7 +1,7 @@
 use crate::cli::AppSettings;
 use crate::error::Error;
 use crate::http::download_file;
-use crate::website::Website;
+use crate::website::{Website, WebsitesTomlFormat};
 use std::fs;
 use std::path::Path;
 
@@ -9,11 +9,25 @@ fn parse_csv_websites(csv_data: &str) -> Result<Vec<Website>, Error> {
     let mut rdr = csv::Reader::from_reader(csv_data.as_bytes());
     let mut websites = Vec::new();
     for result in rdr.deserialize() {
-        let website: Website = result
-            .map_err(|e| Error::StringError(format!("Failed to parse CSV row: {}", e)))?;
+        let website: Website =
+            result.map_err(|e| Error::StringError(format!("Failed to parse CSV row: {}", e)))?;
         websites.push(website);
     }
+
     Ok(websites)
+}
+
+fn parse_toml_websites(toml_data: &str) -> Result<Vec<Website>, Error> {
+    match toml::from_str::<Vec<Website>>(toml_data) {
+        Ok(websites) => Ok(websites),
+        Err(vec_err) => toml::from_str::<WebsitesTomlFormat>(toml_data)
+            .map(|list| list.websites)
+            .map_err(|table_err| {
+                Error::StringError(format!(
+                    "Failed to parse TOML as a direct website array ({vec_err}) or as a [[websites]] table array under a 'websites' key ({table_err})"
+                ))
+            }),
+    }
 }
 
 /// Loads the given file(s) with acquire_file_data(), returns a vec of Websites for each site in the file
@@ -29,7 +43,7 @@ pub async fn parse_website_list(settings: &AppSettings) -> Result<Vec<Website>, 
 
     // TOML literals
     for toml in &settings.toml_lists {
-        let mut list: Vec<Website> = toml::from_str(toml)
+        let mut list: Vec<Website> = parse_toml_websites(toml)
             .map_err(|e| Error::StringError(format!("Failed to parse TOML literal: {e}")))?;
         all_websites.append(&mut list);
     }
@@ -39,13 +53,21 @@ pub async fn parse_website_list(settings: &AppSettings) -> Result<Vec<Website>, 
         let file_data = acquire_file_data(path).await?;
         let ext = get_extension_from_path(path).unwrap_or_else(|| "json".into());
         let mut list = match ext.as_str() {
-            "json" => serde_json::from_str::<Vec<Website>>(&file_data)
-                .map_err(|e| Error::StringError(format!("Failed to parse JSON file '{}': {}", path, e)))?,
-            "toml" => toml::from_str::<Vec<Website>>(&file_data)
-                .map_err(|e| Error::StringError(format!("Failed to parse TOML file '{}': {}", path, e)))?,
-            "csv" => parse_csv_websites(&file_data)
-                .map_err(|e| Error::StringError(format!("Failed to parse CSV file '{}': {}", path, e)))?,
-            other => return Err(Error::StringError(format!("Unsupported file format '{}'", other))),
+            "json" => serde_json::from_str::<Vec<Website>>(&file_data).map_err(|e| {
+                Error::StringError(format!("Failed to parse JSON file '{}': {}", path, e))
+            })?,
+            "toml" => parse_toml_websites(&file_data).map_err(|e| {
+                Error::StringError(format!("Failed to parse TOML file '{}': {}", path, e))
+            })?,
+            "csv" => parse_csv_websites(&file_data).map_err(|e| {
+                Error::StringError(format!("Failed to parse CSV file '{}': {}", path, e))
+            })?,
+            other => {
+                return Err(Error::StringError(format!(
+                    "Unsupported file format '{}'",
+                    other
+                )))
+            }
         };
         all_websites.append(&mut list);
     }
@@ -96,6 +118,7 @@ pub fn get_extension_from_path(path: &str) -> Option<String> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::time::{SystemTime, UNIX_EPOCH};
 
     #[tokio::test]
     async fn test_acquire_file_from_invalid_url() {
@@ -135,5 +158,37 @@ mod tests {
         let path = "archive.tar.gz";
         let result = get_extension_from_path(path);
         assert_eq!(result, Some("gz".to_string()));
+    }
+
+    #[tokio::test]
+    async fn test_parse_website_list_from_toml_table_array_file() {
+        let unique = SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos();
+        let path = std::env::temp_dir().join(format!(
+            "ringfairy-sites-{}-{}.toml",
+            std::process::id(),
+            unique
+        ));
+        let toml_data = r#"
+[[websites]]
+name = "Example Site"
+slug = "example-site"
+url = "https://example.com"
+"#;
+        std::fs::write(&path, toml_data).unwrap();
+
+        let mut settings = AppSettings::default();
+        settings.filepath_list = vec![path.to_string_lossy().to_string()];
+        settings.json_lists.clear();
+        settings.toml_lists.clear();
+
+        let parsed = parse_website_list(&settings).await.unwrap();
+        std::fs::remove_file(&path).unwrap();
+
+        assert_eq!(parsed.len(), 1);
+        assert_eq!(parsed[0].slug, "example-site");
+        assert_eq!(parsed[0].url, "https://example.com");
     }
 }

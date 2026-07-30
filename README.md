@@ -56,11 +56,11 @@ If you decide to launch your own webring with this tool, let me know and I'll li
 ## 🪄 Usage
 
 - Download a release binary OR clone and build from source. 
-- Modify the `websites.json` (by default) file to include the details of the websites you want to include in the webring. Each website must be added to the list.
+- Modify the `websites.toml` (by default) file to include the details of the websites you want to include in the webring. Each website must be added to the list.
 - Modify the `ringfairy.toml` (by default) file according to your needs. 
 - (Optional) Customize pages by modifying the templates, located in the `data/templates` folder (by default). You can also use remote files as templates. See the "Templates" section below. 
 - (Optional) Add any additional files into the `data/assets` folder (by default). Everything in this folder will simply be copied over into the output directory. Here you can add extras like images, HTML/CSS, etc. 
-- Run `ringfairy` to generate the webring by writing HTML files containing the redirects. Each site will link to the next/previous site in the `websites.json` file, forming your webring!
+- Run `ringfairy` to generate the webring by writing HTML files containing the redirects. Each site will link to the next/previous site in the `websites.toml` file, forming your webring!
 - Host the generated files on your preferred hosting platform. 
 
 ## ⚙️ Command-Line Arguments
@@ -69,7 +69,7 @@ Command-line arguments take precedence over any settings in the config file.
 
 - *`-h`, `--help`*: Print help
 - *`-c`, `--config`*: Specify the location of the optional config file. It can be remote; for example an HTTP link to an appropriate JSON file on Pastebin, GitHub, etc. 
-- *`-l`, `--list`*: Specify the JSON or TOML file containing the list of websites. Default: `./websites.json`
+- *`-l`, `--list`*: Specify the JSON or TOML file containing the list of websites. Default: `./websites.toml`
 - *`-o`, `--output`*: Define the output folder, where the generated files will be saved. Default: `./webring`
 - *`-a`, `--assets`*: Specify the assets folder. Any files in here will be copied to the output folder. This lets you include any extra files you want, such as images or extra web pages, etc. Default: `./data/assets`
 - *`-t`, `--templates`*: Specify path to the template folder. Use `redirect.html` for redirect pages (i.e. the HTML which composes the webring). Any extra pages can be added here if you want them to be populated with generated content. Default: `./data/templates`
@@ -98,7 +98,7 @@ Command-line arguments take precedence over any settings in the config file.
 
 By default, the application only logs error messages. 
 
-By passing `-v`/`--verbose` (on the command line) or setting `"verbose": true` (in the config JSON), you can tell the application to show warn level logs. To show info level logs, pass `-vv`; for debug, `-vvv`. 
+By passing `-v`/`--verbose` (on the command line) or setting `verbose = true` in the config file, you can tell the application to show warn level logs. To show info level logs, pass `-vv`; for debug, `-vvv`. 
 
 To save these logs to a file, you can redirect standard output and standard error to a file when running your application. For example:
 
@@ -139,28 +139,25 @@ Right now, `{{ url }}` is a unique tag that only works in `redirect.html` for th
 
 ----------------------------
 
-## Example `websites.json`
+## Example `websites.toml`
 
-```json
-[
-	{
-    "name": "Example 2 Site",
-    "slug": "Example2",
-    "about": "Example Website 2!",
-    "url": "https://example2.com",
-    "rss": "https://example2.com/index.xml",
-    "owner": "owner 2"
-  },
-  {
-    "name": "Example 3 Site",
-    "slug": "Example3",
-    "about": "Example Website 3!",
-    "url": "https://example3.com",
-    "rss": "https://example3.com/rss/index.xml",
-    "atom": "https://example3.com/atom.xml",
-    "owner": "owner 3"
-  }
-]
+```toml
+[[websites]]
+name = "Example 2 Site"
+slug = "Example2"
+about = "Example Website 2!"
+url = "https://example2.com"
+rss = "https://example2.com/index.xml"
+owner = "owner 2"
+
+[[websites]]
+name = "Example 3 Site"
+slug = "Example3"
+about = "Example Website 3!"
+url = "https://example3.com"
+rss = "https://example3.com/rss/index.xml"
+atom = "https://example3.com/atom.xml"
+owner = "owner 3"
 ```
 
 
